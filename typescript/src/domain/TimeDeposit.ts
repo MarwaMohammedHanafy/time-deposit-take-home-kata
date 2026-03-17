@@ -1,3 +1,5 @@
+// Domain entity representing a time deposit account
+// This is pure domain ( no DB, no API)
 export class TimeDeposit {
   public id: number
   public planType: string
