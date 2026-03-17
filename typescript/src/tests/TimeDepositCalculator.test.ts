@@ -1,5 +1,5 @@
-import { TimeDeposit } from '../TimeDeposit'
-import { TimeDepositCalculator } from '../TimeDepositCalculator'
+import { TimeDeposit } from '../domain/TimeDeposit'
+import { TimeDepositCalculator } from '../domain/TimeDepositCalculator'
 
 describe('TimeDepositCalculator.updateBalance (characterization)', () => {
 

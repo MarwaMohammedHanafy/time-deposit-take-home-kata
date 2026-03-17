@@ -1,5 +1,5 @@
-import { TimeDeposit } from './TimeDeposit'
-import { TimeDepositCalculator } from './TimeDepositCalculator'
+import { TimeDeposit } from './domain/TimeDeposit'
+import { TimeDepositCalculator } from './domain/TimeDepositCalculator'
 
 const calc = new TimeDepositCalculator()
 const plans: TimeDeposit[] = [new TimeDeposit('basic', 1234567.0, 45)]
