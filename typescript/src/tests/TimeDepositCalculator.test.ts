@@ -14,3 +14,25 @@ describe('TimeDepositCalculator.updateBalance (characterization)', () => {
   })
 
 })
+
+describe('TimeDepositCalculator - parameterized', () => {
+
+  test.each([
+    ['basic', 1200, 45, 1201],
+    ['student', 1200, 100, 1203],
+    ['premium', 1200, 50, 1205]
+  ])(
+    'should update %s plan correctly',
+    (planType, balance, days, expected) => {
+
+      const calc = new TimeDepositCalculator()
+
+      const plans = [new TimeDeposit(1, planType, balance, days)]
+
+      calc.updateBalance(plans)
+
+      expect(plans[0].balance).toBe(expected)
+    }
+  )
+
+})
