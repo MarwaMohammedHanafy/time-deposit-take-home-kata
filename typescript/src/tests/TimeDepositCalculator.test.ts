@@ -1,11 +1,16 @@
 import { TimeDeposit } from '../TimeDeposit'
 import { TimeDepositCalculator } from '../TimeDepositCalculator'
 
+describe('TimeDepositCalculator.updateBalance (characterization)', () => {
 
-test('Should update balance', () => {
-  const plans: TimeDeposit[] = [new TimeDeposit(1, 'basic', 1234567.0, 45)]
-  const calc = new TimeDepositCalculator()
-  calc.updateBalance(plans)
+  test('basic plan adds interest after 30 days', () => {
+    const calc = new TimeDepositCalculator()
 
-  expect(1).toBe(1)
+    const plans = [new TimeDeposit(1, 'basic', 1000, 45)]
+
+    calc.updateBalance(plans)
+
+    expect(plans[0].balance).toBe(1000.83)
+  })
+
 })
