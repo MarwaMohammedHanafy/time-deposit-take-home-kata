@@ -1,27 +1,20 @@
 import { TimeDeposit } from './TimeDeposit'
+import { InterestStrategyFactory } from './interest/InterestStrategyFactory'
 
 export class TimeDepositCalculator {
+
   public updateBalance(xs: TimeDeposit[]) {
-    for (let i = 0; i < xs.length; i++) {
-      let a = 0
+    for (const deposit of xs) {
 
-      if (xs[i].days > 30) {
-        if (xs[i].planType === 'student') {
-          if (xs[i].days < 366) {
-            a += (xs[i].balance * 0.03) / 12
-          }
-        } else if (xs[i].planType === 'premium') {
-          if (xs[i].days > 45) {
-            a += (xs[i].balance * 0.05) / 12
-          }
-        } else if (xs[i].planType === 'basic') {
-          a += (xs[i].balance * 0.01) / 12
-        }
-      }
+      const strategy = InterestStrategyFactory.create(deposit.planType)
 
-      const a2d = Math.round((a + Number.EPSILON) * 100) / 100
+      const interest = strategy.calculate(deposit)
 
-      xs[i].balance += a2d
+      const rounded = Math.round((interest + Number.EPSILON) * 100) / 100
+
+      deposit.balance += rounded
     }
-  };
+
+  }
+
 }
