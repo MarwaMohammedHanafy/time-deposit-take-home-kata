@@ -1,7 +1,10 @@
-/** Jest config for PostgreSQL integration tests (Testcontainers). Run with: npm run test:integration:postgres */
+/** Jest config for PostgreSQL integration tests */
 module.exports = {
   testMatch: ['**/__tests__/integration/postgres/**/*.postgres.test.ts'],
-  testPathIgnorePatterns: ['/node_modules/'],
-  forceExit: true,
-  testTimeout: 120000,
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    'setupPostgresTestDb.ts'
+  ],
+  testEnvironment: 'node',
+  testTimeout: 120000
 }
