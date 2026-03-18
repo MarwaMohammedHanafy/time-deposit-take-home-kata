@@ -1,17 +1,25 @@
 import express from 'express'
 import { GetTimeDepositsUseCase } from '../application/GetTimeDepositsUseCase'
-import { PrismaTimeDepositRepository } from '../infrastructure/PrismaTimeDepositRepository'
+import { UpdateTimeDepositsUseCase } from '../application/UpdateTimeDepositsUseCase'
 
 const app = express()
 
 app.use(express.json())
 
-const repository = new PrismaTimeDepositRepository()
-const getTimeDepositsUseCase = new GetTimeDepositsUseCase(repository)
+export function registerRoutes(
+  getUseCase: GetTimeDepositsUseCase,
+  updateUseCase: UpdateTimeDepositsUseCase
+) {
 
-app.get('/time-deposits', async (_req, res) => {
-  const deposits = await getTimeDepositsUseCase.execute()
-  res.json(deposits)
-})
+  app.get('/time-deposits', async (_req, res) => {
+    const deposits = await getUseCase.execute()
+    res.json(deposits)
+  })
 
-export { app }
+  app.post('/time-deposits/update-balances', async (_req, res) => {
+    await updateUseCase.execute()
+    res.status(204).send()
+  })
+
+  return app
+}
