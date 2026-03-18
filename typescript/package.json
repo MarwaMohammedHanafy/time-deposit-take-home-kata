@@ -9,6 +9,7 @@
     "dev": "nodemon src/index.ts",
     "start": "ts-node src/index.ts",
     "test": "jest src/tests/*.test.ts --watch",
+    "test:integration": "cross-env DATABASE_URL=file:./prisma/test.db npx prisma migrate deploy && npx jest --config jest.integration.config.js --runInBand",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
@@ -34,6 +35,7 @@
     "@types/express": "^5.0.6",
     "@types/jest": "^29.1.1",
     "@types/node": "18.7.18",
+    "cross-env": "^10.1.0",
     "nodemon": "^2.0.20",
     "prisma": "^5.22.0"
   },
