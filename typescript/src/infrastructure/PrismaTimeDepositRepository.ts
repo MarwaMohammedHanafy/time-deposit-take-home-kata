@@ -2,9 +2,10 @@ import { PrismaClient } from '@prisma/client'
 import { TimeDeposit } from '../domain/TimeDeposit'
 import { Withdrawal } from '../domain/Withdrawal'
 import { TimeDepositRepository } from '../domain/TimeDepositRepository'
+import { prisma } from './prisma'
 
 export class PrismaTimeDepositRepository implements TimeDepositRepository {
-  constructor(private readonly prisma: PrismaClient = new PrismaClient()) {}
+  constructor(private readonly prisma: PrismaClient = prisma) {}
 
   async findAll(): Promise<TimeDeposit[]> {
     const rows = await this.prisma.timeDeposit.findMany({
