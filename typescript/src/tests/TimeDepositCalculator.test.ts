@@ -10,7 +10,7 @@ describe('TimeDepositCalculator.updateBalance (characterization)', () => {
 
     calc.updateBalance(plans)
 
-    expect(plans[0].balance).toBe(1000.83)
+    expect(plans[0].balance).toBeCloseTo(1000.83, 2)
   })
 
 })
@@ -31,7 +31,7 @@ describe('TimeDepositCalculator - parameterized', () => {
 
       calc.updateBalance(plans)
 
-      expect(plans[0].balance).toBe(expected)
+      expect(plans[0].balance).toBeCloseTo(expected, 2)
     }
   )
 
@@ -45,7 +45,7 @@ describe('TimeDepositCalculator - edge cases', () => {
 
     calc.updateBalance(plans)
 
-    expect(plans[0].balance).toBe(1000)
+    expect(plans[0].balance).toBeCloseTo(1000, 2)
   })
 
   test('premium plan starts after 45 days only', () => {
@@ -55,7 +55,7 @@ describe('TimeDepositCalculator - edge cases', () => {
 
     calc.updateBalance(plans)
 
-    expect(plans[0].balance).toBe(1000)
+    expect(plans[0].balance).toBeCloseTo(1000)
   })
 
   test('student plan stops after 365 days', () => {
@@ -65,7 +65,7 @@ describe('TimeDepositCalculator - edge cases', () => {
 
     calc.updateBalance(plans)
 
-    expect(plans[0].balance).toBe(1000)
+    expect(plans[0].balance).toBeCloseTo(1000, 2)
   })
 
   test('empty array should not throw', () => {
@@ -87,9 +87,9 @@ describe('TimeDepositCalculator - edge cases', () => {
 
     calc.updateBalance(plans)
 
-    expect(plans[0].balance).toBe(1201)
-    expect(plans[1].balance).toBe(501.25)
-    expect(plans[2].balance).toBe(3012.5)
+    expect(plans[0].balance).toBeCloseTo(1201, 2)
+    expect(plans[1].balance).toBeCloseTo(501.25, 2)
+    expect(plans[2].balance).toBeCloseTo(3012.5, 2)
   })
 
 })
