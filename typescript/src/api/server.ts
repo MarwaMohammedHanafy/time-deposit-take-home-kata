@@ -1,10 +1,14 @@
 import express from 'express'
+import swaggerUi from 'swagger-ui-express'
 import { GetTimeDepositsUseCase } from '../application/GetTimeDepositsUseCase'
 import { UpdateTimeDepositsUseCase } from '../application/UpdateTimeDepositsUseCase'
+import { openApiSpec } from './openapi'
 
 const app = express()
 
 app.use(express.json())
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSpec))
 
 export function registerRoutes(
   getUseCase: GetTimeDepositsUseCase,
