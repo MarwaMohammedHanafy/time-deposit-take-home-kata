@@ -1,0 +1,27 @@
+// Prisma schema for Time Deposit kata (PostgreSQL)
+// Used for PostgreSQL integration tests. Generate with: prisma generate --schema=prisma/schema.postgres.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TimeDeposit {
+  id          Int          @id @default(autoincrement())
+  planType    String
+  balance     Float
+  days        Int
+  withdrawals Withdrawal[]
+}
+
+model Withdrawal {
+  id             Int        @id @default(autoincrement())
+  timeDepositId  Int
+  timeDeposit    TimeDeposit @relation(fields: [timeDepositId], references: [id], onDelete: Cascade)
+  amount         Float
+  date           DateTime
+}
