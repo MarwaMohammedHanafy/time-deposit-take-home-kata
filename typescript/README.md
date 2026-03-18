@@ -44,3 +44,37 @@ This is optional, you can choose to use `npm` itself.
 ### Run server
 
 `yarn start`
+
+## Database (Prisma)
+
+The project uses [Prisma](https://www.prisma.io/) with SQLite by default.
+
+### Setup
+
+1. Copy `.env.example` to `.env` and set `DATABASE_URL` (default: `file:./prisma/dev.db`).
+2. Run migrations: `npm run db:migrate` (or `yarn db:migrate`).
+3. Generate the client after schema changes: `npm run db:generate`.
+
+### Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run db:generate` | Generate Prisma Client from schema |
+| `npm run db:migrate` | Create and apply migrations (dev) |
+| `npm run db:migrate:deploy` | Apply existing migrations (e.g. in CI/production) |
+| `npm run db:push` | Push schema to DB without creating a migration |
+| `npm run db:studio` | Open Prisma Studio to inspect/edit data |
+
+### Using the repository
+
+```ts
+import { PrismaTimeDepositRepository } from './infrastructure/PrismaTimeDepositRepository'
+import { TimeDepositCalculator } from './domain/TimeDepositCalculator'
+
+const repo = new PrismaTimeDepositRepository()
+const deposits = await repo.findAll()
+const calc = new TimeDepositCalculator()
+calc.updateBalance(deposits)
+await repo.saveAll(deposits)
+await repo.disconnect()
+```
