@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
-import { GetTimeDepositsUseCase } from '../../application/GetTimeDepositsUseCase'
-import { PrismaTimeDepositRepository } from '../../infrastructure/PrismaTimeDepositRepository'
+import { GetTimeDepositsUseCase } from '../../../application/GetTimeDepositsUseCase.ts'
+import { PrismaTimeDepositRepository } from '../../../infrastructure/PrismaTimeDepositRepository'
 import { clearTestDb, setupTestDb } from './setupTestDb'
 
 describe('GetTimeDepositsUseCase (integration)', () => {

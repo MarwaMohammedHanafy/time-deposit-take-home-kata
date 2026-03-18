@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
-import { UpdateTimeDepositsUseCase } from '../../application/UpdateTimeDepositsUseCase'
-import { TimeDepositCalculator } from '../../domain/TimeDepositCalculator'
-import { PrismaTimeDepositRepository } from '../../infrastructure/PrismaTimeDepositRepository'
+import { UpdateTimeDepositsUseCase } from '../../../application/UpdateTimeDepositsUseCase'
+import { TimeDepositCalculator } from '../../../domain/TimeDepositCalculator'
+import { PrismaTimeDepositRepository } from '../../../infrastructure/PrismaTimeDepositRepository'
 import { clearTestDb, setupTestDb } from './setupTestDb'
 
 describe('UpdateTimeDepositsUseCase (integration)', () => {
