@@ -1,7 +1,7 @@
-/** Jest config for integration tests only. Run with: jest --config jest.integration.config.js */
+/** Jest config for SQLite integration tests only. Run with: npm run test:integration */
 module.exports = {
   testMatch: ['**/__tests__/integration/**/*.test.ts'],
-  testPathIgnorePatterns: ['/node_modules/'],
+  testPathIgnorePatterns: ['/node_modules/', '/postgres/'],
   forceExit: true,
   testTimeout: 15000,
 }
