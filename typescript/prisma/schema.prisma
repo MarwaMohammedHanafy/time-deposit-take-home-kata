@@ -1,0 +1,27 @@
+// Prisma schema for Time Deposit kata
+// https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model TimeDeposit {
+  id          Int          @id @default(autoincrement())
+  planType    String
+  balance     Float
+  days        Int
+  withdrawals Withdrawal[]
+}
+
+model Withdrawal {
+  id             Int        @id @default(autoincrement())
+  timeDepositId  Int
+  timeDeposit    TimeDeposit @relation(fields: [timeDepositId], references: [id], onDelete: Cascade)
+  amount         Float
+  date           DateTime
+}
