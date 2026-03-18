@@ -1,6 +1,9 @@
 node_modules/
 target/
 .DS_Store
+.env
+*.db
+*.db-journal
 bin/
 obj/
 __pycache__/
