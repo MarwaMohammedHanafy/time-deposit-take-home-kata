@@ -5,12 +5,15 @@ A TypeScript/Node.js backend for managing time deposit accounts. It calculates i
 ---
 
 ## Features
+- Exactly two REST endpoints implemented as required:
+  - `GET /time-deposits`
+  - `POST /time-deposits/update-balances`
 
 **Interest plans**
 
-- **Basic:** 1% monthly interest after 30 days.
-- **Student:** 3% monthly after 30 days; no interest after 365 days.
-- **Premium:** 5% monthly; interest applies only after 45 days.
+- **Basic:** 1% annual interest (applied monthly) after 30 days.
+- **Student:** 3% annual interest (applied monthly) after 30 days; no interest after 365 days.
+- **Premium:** 5% annual interest (applied monthly); starts after 45 days.
 
 **Stack and quality**
 
@@ -24,6 +27,7 @@ A TypeScript/Node.js backend for managing time deposit accounts. It calculates i
 
 ## Architecture
 
+The original `TimeDeposit` class and `updateBalance` method were preserved to avoid breaking changes, as required.
 The project uses **Hexagonal Architecture**: domain and application stay free of frameworks and infrastructure; adapters (API, persistence) depend inward.
 
 **Layers**
@@ -40,6 +44,7 @@ The project uses **Hexagonal Architecture**: domain and application stay free of
 - **Strategy:** Interest logic per plan (`BasicInterestStrategy`, `StudentInterestStrategy`, `PremiumInterestStrategy`) selected by a factory.
 - **Repository:** Persistence behind `TimeDepositRepository`; implementation is injectable.
 - **Dependency injection:** Use cases and repository receive dependencies in the composition root (`src/index.ts`).
+- This design allows new interest rules to be added without modifying existing logic, adhering to the Open/Closed Principle.
 
 ---
 
@@ -58,7 +63,6 @@ typescript/
         sqlite/
         postgres/
   prisma/
-  test-api.cjs
   package.json
 ```
 
@@ -102,6 +106,13 @@ npm run dev
 Server runs at **http://localhost:3000**.
 
 ---
+## 🌱 Seed Data
+
+To populate the database with sample data covering all interest scenarios:
+
+```bash
+npx ts-node prisma/seed.ts
+```
 
 ## Swagger Instructions (Required for Submission)
 
@@ -120,6 +131,7 @@ Server runs at **http://localhost:3000**.
    - Click **Try it out**.
    - Click **Execute** (no body).
    - **Expected:** Status **204** (no content). After this, run **GET /time-deposits** again to see updated balances (interest applied).
+   - After execution, run **GET /time-deposits** again to verify that balances have been updated according to the interest rules.
 
 ---
 
@@ -154,19 +166,6 @@ npm run test:integration:postgres
 - PostgreSQL tests use Testcontainers; they are skipped if Docker is unavailable.
 - Each integration run uses an isolated database (test DB for SQLite; ephemeral Postgres container).
 
----
-
-## API Test Script
-
-From the `typescript` folder:
-
-```bash
-node test-api.cjs
-```
-
-The script calls **GET /time-deposits**, then **POST /time-deposits/update-balances**, and reports status codes. Use it to confirm the server responds with 200 and 204. For a full flow, run GET once, then POST, then GET again to see updated balances.
-
----
 
 ## Database
 
