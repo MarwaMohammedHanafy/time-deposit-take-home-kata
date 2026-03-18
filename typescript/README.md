@@ -1,5 +1,11 @@
 # To run the code
 
+## Architecture
+
+The application follows a hexagonal architecture with a clear separation between domain, application, and infrastructure layers.
+
+The persistence layer is abstracted via a repository pattern, making the system database-agnostic and allowing easy migration to PostgreSQL with Testcontainers if needed.
+
 ## Installation
 
 ### Install nvm (optional)
@@ -77,4 +83,19 @@ const calc = new TimeDepositCalculator()
 calc.updateBalance(deposits)
 await repo.saveAll(deposits)
 await repo.disconnect()
+```
+
+## Integration Testing
+
+Integration tests are implemented using SQLite with Prisma.
+
+- A dedicated test database is used (`prisma/test.db`)
+- Migrations are applied before test execution
+- Tests run sequentially (`--runInBand`) to avoid SQLite file conflicts
+- Database is cleared before each test to ensure isolation
+
+Run integration tests:
+
+```bash
+npm run test:integration
 ```
